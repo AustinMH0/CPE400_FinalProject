@@ -8,7 +8,7 @@ def print_packet_info(packet):
     print(packet.time)
 
 # Read the PCAP file
-packets = rdpcap('controls_cap2.pcapng')
+packets = rdpcap('1min_play_1min_pause.pcapng')
 
 hci_event_count = 0
 l2cap_count = 0
@@ -38,15 +38,11 @@ for packet in packets:
     #Count the number of HCI_CMDs
     elif packet.haslayer(scapy.layers.bluetooth.HCI_Command_Hdr):
         hci_cmd_count += 1
-    if packet.haslayer(scapy.layers.bluetooth.BluetoothRFCommSocket):
-        rfcomm_count += 1
 print("Total number of  packets read: " + str(len(packets)))
 
 print("Number of HCI_EVT packets: " + str(hci_event_count))
 print("Number of HCI_CMD packets: " + str(hci_cmd_count))
 print("Number of L2CAP packets: " + str(l2cap_count))
-print("Number of RFCOMM packets: " + str(rfcomm_count))
-print(packets[-1].layers)
 plt.plot(l2_cap_times, l2_cap_totals)
 plt.plot(hci_evt_times, hci_evt_totals)
 plt.xlabel("Time since capture (Seconds)")
